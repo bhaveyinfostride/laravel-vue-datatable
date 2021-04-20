@@ -17561,7 +17561,19 @@ var DataTableFilters_component = normalizeComponent(
                 baseUrl = url.split("?")[0];
                 _context.next = 6;
                 return axios_default.a.get(baseUrl, options).catch(function (errors) {
-                  alert(errors);
+                  Swal.fire({
+                        title: "Session Expired",
+                        text: "Your session has expired. Would you like to be redirected to the login page?",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Yes",
+                        closeOnConfirm: false
+                    }).then((result) => {
+                        if (result.value) {
+                            window.location = '/login';
+                        }
+                    });
                 });
 
               case 6:
