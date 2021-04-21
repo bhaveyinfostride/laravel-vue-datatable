@@ -205,19 +205,23 @@ export default {
 
             let response = await axios.get(baseUrl, options)
                 .catch(errors => {
-                    Swal.fire({
-                        title: "Session Expired",
-                        text: "Your session has expired. Would you like to be redirected to the login page?",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Yes",
-                        closeOnConfirm: false
-                    }).then((result) => {
-                        if (result.value) {
-                            window.location = '/login';
-                        }
-                    });
+                    if (401 === errors.response.status) {
+                        Swal.fire({
+                            title: "Session Expired",
+                            text: "Your session has expired. Would you like to be redirected to the login page?",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "Yes",
+                            closeOnConfirm: false
+                        }).then((result) => {
+                            if (result.value) {
+                                window.location = '/login';
+                            }
+                        });
+                     }else{
+                        alert(errors);
+                     }
                 });
 
             if (response) {
